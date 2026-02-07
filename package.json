@@ -1,0 +1,28 @@
+{
+  "name": "upsifs-university-management",
+  "version": "1.0.0",
+  "description": "UPSIFS University Management System - Full Stack Application",
+  "scripts": {
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "start": "cd backend && npm start",
+    "build": "cd frontend && npm run build",
+    "init-db": "cd backend && npm run init-db",
+    "setup": "npm run install:all && npm run init-db"
+  },
+  "keywords": [
+    "university",
+    "management",
+    "education",
+    "react",
+    "nodejs",
+    "sqlite"
+  ],
+  "author": "UPSIFS",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
