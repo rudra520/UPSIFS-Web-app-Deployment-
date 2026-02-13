@@ -125,6 +125,7 @@ export interface DashboardConfig {
     id?: string;
     label: string;
     value?: string;
+    sub?: string;
     emoji?: string;
     accent?: string;
   };
