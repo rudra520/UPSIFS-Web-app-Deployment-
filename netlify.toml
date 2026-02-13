@@ -1,0 +1,20 @@
+# Netlify configuration for UPSIFS frontend deployment
+
+[build]
+  # Set the base directory to the frontend folder
+  base = "frontend"
+  
+  # Build command
+  command = "npm run build"
+  
+  # Output directory (relative to base)
+  publish = "dist"
+
+# SPA redirect rule - serves index.html for all routes
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Environment variables can be set in Netlify UI
+# Required: VITE_API_URL=https://your-backend-url.com/api

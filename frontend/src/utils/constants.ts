@@ -1,4 +1,4 @@
-import { UserRole, User, Subject, Assignment, Notice, Grievance, Student, Lab, DashboardConfig } from '../types';
+import { UserRole, User as UserType, Subject, Assignment, Notice, Grievance, Student, Lab, DashboardConfig } from '../types';
 import { 
   BarChart2, Calendar, BookOpen, FileText, Bell, CreditCard, MessageSquare,
   Users, UploadCloud, Pencil, CheckCircle, Clock, AlertTriangle, TrendingUp,
@@ -16,7 +16,7 @@ export const API_BASE_URL = 'http://localhost:5000/api';
 export const UPSIFS_LOGO_URL = 'https://www.upsifs.ac.in/images/logo.png';
 
 // Mock User Data
-export const MOCK_USER_STUDENT: User = {
+export const MOCK_USER_STUDENT: UserType = {
   id: '1',
   name: 'Aryan Sharma',
   email: 'aryan.sharma@upsifs.ac.in',
@@ -26,7 +26,7 @@ export const MOCK_USER_STUDENT: User = {
   enrollmentNo: 'CS2021001',
 };
 
-export const MOCK_USER_TEACHER: User = {
+export const MOCK_USER_TEACHER: UserType = {
   id: '2',
   name: 'Dr. Sarah Smith',
   email: 'sarah.smith@upsifs.ac.in',

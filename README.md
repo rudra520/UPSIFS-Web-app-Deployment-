@@ -212,6 +212,17 @@ DB_PATH=./database/upsifs.db
 CORS_ORIGIN=http://localhost:3000
 ```
 
+### Frontend (.env)
+```env
+# Optional for local development (defaults to http://localhost:5000/api)
+VITE_API_URL=http://localhost:5000/api
+
+# For production deployment, set to your backend API URL
+# VITE_API_URL=https://your-backend-host.com/api
+```
+
+> **Note:** See `frontend/.env.example` for a template. Environment variables prefixed with `VITE_` are exposed to the browser.
+
 ## Database Schema
 
 ### Tables
@@ -274,24 +285,154 @@ cd backend
 npm run init-db
 ```
 
-## Production Deployment
+## Free Deployment (Vercel/Netlify)
+
+The UPSIFS frontend can be deployed for **free** on platforms like Vercel or Netlify. You'll need to deploy the backend separately.
+
+### Prerequisites
+
+- GitHub account with this repository
+- Backend deployed on a free platform (see Backend Deployment below)
+
+### Frontend Deployment Options
+
+#### Option 1: Deploy to Vercel (Recommended)
+
+1. **Connect Your Repository**
+   - Go to [vercel.com](https://vercel.com) and sign up/login with GitHub
+   - Click "New Project" and import your UPSIFS repository
+   - Vercel will automatically detect the configuration from `vercel.json`
+
+2. **Configure Environment Variables**
+   - In the Vercel project settings, add the following environment variable:
+     ```
+     VITE_API_URL=https://your-backend-url.com/api
+     ```
+   - Replace `your-backend-url.com` with your deployed backend URL
+
+3. **Deploy**
+   - Click "Deploy" - Vercel will build and deploy your frontend
+   - Your app will be live at `https://your-project.vercel.app`
+
+4. **Update Backend CORS**
+   - Add your Vercel URL to the backend's `CORS_ORIGIN` environment variable
+   - Example: `CORS_ORIGIN=https://your-project.vercel.app`
+
+#### Option 2: Deploy to Netlify
+
+1. **Connect Your Repository**
+   - Go to [netlify.com](https://netlify.com) and sign up/login with GitHub
+   - Click "New site from Git" and select your UPSIFS repository
+   - Netlify will automatically detect the configuration from `netlify.toml`
+
+2. **Configure Environment Variables**
+   - In Site Settings → Environment Variables, add:
+     ```
+     VITE_API_URL=https://your-backend-url.com/api
+     ```
+
+3. **Deploy**
+   - Click "Deploy site" - Netlify will build and deploy your frontend
+   - Your app will be live at `https://your-project.netlify.app`
+
+4. **Update Backend CORS**
+   - Add your Netlify URL to the backend's `CORS_ORIGIN` environment variable
+
+### Backend Deployment
+
+The backend must be deployed separately. Here are some **free** options:
+
+#### Render (Recommended for Free Tier)
+
+1. Go to [render.com](https://render.com) and create a free account
+2. Create a new "Web Service"
+3. Connect your GitHub repository
+4. Configure the service:
+   - **Root Directory:** `backend`
+   - **Build Command:** `npm install`
+   - **Start Command:** `npm start`
+5. Add environment variables:
+   ```
+   NODE_ENV=production
+   JWT_SECRET=your-super-secret-random-string-here
+   CORS_ORIGIN=https://your-frontend-url.vercel.app
+   PORT=5000
+   ```
+6. Deploy - your backend will be available at `https://your-service.onrender.com`
+7. Use `https://your-service.onrender.com/api` as your `VITE_API_URL`
+
+⚠️ **Note:** Render's free tier may spin down after 15 minutes of inactivity, causing a 30-60 second cold start on the first request.
+
+#### Railway
+
+1. Go to [railway.app](https://railway.app) and sign up
+2. Create a new project from your GitHub repository
+3. Set the root directory to `backend`
+4. Add the same environment variables as above
+5. Railway will auto-deploy your backend
+
+#### Fly.io
+
+1. Install the Fly CLI: `curl -L https://fly.io/install.sh | sh`
+2. Navigate to the backend folder: `cd backend`
+3. Run `fly launch` and follow the prompts
+4. Set environment variables using `fly secrets set`
+
+### Important Notes
+
+1. **CORS Configuration:** Always ensure your backend's `CORS_ORIGIN` includes your frontend's deployed URL
+2. **Environment Variables:** Never commit `.env` files - use platform environment variable settings
+3. **Database:** For production, consider using a managed database instead of SQLite (PostgreSQL, MySQL)
+4. **Cold Starts:** Free tier services may have cold start delays - first request after inactivity will be slow
+5. **HTTPS:** Both Vercel/Netlify and Render provide free SSL certificates automatically
+
+### Testing Your Deployment
+
+After deploying:
+1. Visit your frontend URL
+2. Try logging in with the default credentials
+3. Check browser console for any API connection errors
+4. Verify all features work as expected
+
+### Troubleshooting Deployment
+
+- **API Connection Failed:** Check that `VITE_API_URL` is set correctly and backend is running
+- **CORS Errors:** Ensure backend `CORS_ORIGIN` includes your frontend URL
+- **404 on Refresh:** This should be handled by `vercel.json`/`netlify.toml` redirects
+- **Build Failures:** Check build logs for missing dependencies or TypeScript errors
+
+## Self-Hosted Deployment
+
+If you prefer to self-host:
 
 1. **Build Frontend**
    ```bash
    cd frontend
    npm run build
    ```
+   The built files will be in `frontend/dist/`
 
-2. **Set Environment Variables**
+2. **Serve Frontend**
+   - Use any static file server (nginx, Apache, etc.)
+   - Ensure all routes redirect to `index.html` for SPA routing
+
+3. **Set Environment Variables**
+   - Create `frontend/.env.production` with your backend URL:
+     ```
+     VITE_API_URL=https://your-backend-url.com/api
+     ```
+   - Rebuild after changing environment variables
+
+4. **Run Backend**
+   - Set environment variables in `backend/.env`
    - Update `JWT_SECRET` with a strong random string
    - Set `NODE_ENV=production`
    - Update `CORS_ORIGIN` with your frontend URL
-
-3. **Start Production Server**
-   ```bash
-   cd backend
-   npm start
-   ```
+   - Start the server:
+     ```bash
+     cd backend
+     npm start
+     ```
 
 ## Troubleshooting
 
