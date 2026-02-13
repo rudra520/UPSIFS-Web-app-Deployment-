@@ -1,0 +1,29 @@
+# Render deployment configuration for UPSIFS Backend
+
+services:
+  # Backend API Service
+  - type: web
+    name: upsifs-backend
+    runtime: node
+    plan: free
+    region: oregon
+    branch: main
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
+    envVars:
+      - key: PORT
+        value: 5000
+      - key: NODE_ENV
+        value: production
+      - key: DB_PATH
+        value: /opt/render/project/data/upsifs.db
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CORS_ORIGIN
+        sync: false
+        # Set this to your Vercel frontend URL after deployment
+    disk:
+      name: data
+      mountPath: /opt/render/project/data
+      sizeGB: 1
+    healthCheckPath: /api/health

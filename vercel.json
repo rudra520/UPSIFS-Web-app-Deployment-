@@ -9,5 +9,11 @@
       "source": "/(.*)",
       "destination": "/index.html"
     }
-  ]
+  ],
+  "env": {
+    "VITE_API_URL": {
+      "description": "Your backend API URL (e.g., https://upsifs-backend.onrender.com/api)",
+      "value": "https://your-backend-url.onrender.com/api"
+    }
+  }
 }

@@ -24,7 +24,11 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors());
+const corsOrigin = process.env.CORS_ORIGIN || '*';
+app.use(cors({
+  origin: corsOrigin,
+  credentials: true
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
@@ -84,8 +88,21 @@ app.use((req, res) => {
   });
 });
 
+// Initialize database on startup
+const { createTables } = require('./database/init');
+const initDatabase = async () => {
+  try {
+    await createTables();
+    console.log('✅ Database initialized successfully');
+  } catch (error) {
+    console.error('❌ Database initialization failed:', error);
+    // Don't exit the server, just log the error
+  }
+};
+
 // Start server
-app.listen(PORT, () => {
+initDatabase().then(() => {
+  app.listen(PORT, () => {
   console.log(`
 ╔══════════════════════════════════════════════════════════╗
 ║                                                          ║
