@@ -289,6 +289,11 @@ npm run init-db
 
 The UPSIFS frontend can be deployed for **free** on platforms like Vercel or Netlify. You'll need to deploy the backend separately.
 
+> 📖 **For detailed deployment instructions**, see:
+> - [DEPLOYMENT.md](./DEPLOYMENT.md) - Complete deployment guide for Vercel + Render
+> - [DEPLOYMENT_CHECKLIST.md](./DEPLOYMENT_CHECKLIST.md) - Step-by-step deployment checklist
+> - [backend/README.md](./backend/README.md) - Backend API documentation
+
 ### Prerequisites
 
 - GitHub account with this repository
