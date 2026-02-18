@@ -108,8 +108,8 @@ initDatabase().then(() => {
 ║                                                          ║
 ║           UPSIFS Backend Server Running                  ║
 ║                                                          ║
-║   🚀 Server: http://localhost:${PORT}                     ║
-║   📚 API Docs: http://localhost:${PORT}/api/health        ║
+║   🚀 Server: http://localhost:${PORT}                    ║
+║   📚 API Docs: http://localhost:${PORT}/api/health       ║
 ║   🗄️  Database: SQLite (upsifs.db)                       ║
 ║                                                          ║
 ╚══════════════════════════════════════════════════════════╝
